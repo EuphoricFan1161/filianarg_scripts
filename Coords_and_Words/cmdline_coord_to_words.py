@@ -39,7 +39,7 @@ MORSE_TO_LETTER = {'10':'A', '0111':'B',
 #================================================#
 def is_english_word(word, english_vocab):
     is_in_nltk = word.lower() in english_vocab
-    is_in_suplemental = word.lower() in ["anima", "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "sept", "oct", "nov", "dec", "mon", "tues", "wed", "thurs", "fri", "est", "diomede", "im"]
+    is_in_suplemental = word.lower() in ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "sept", "oct", "nov", "dec", "mon", "tues", "wed", "thurs", "fri", "est", "diomede", "im"]
     return is_in_nltk or is_in_suplemental
 
 def generate_binary_from_base10(coord):
