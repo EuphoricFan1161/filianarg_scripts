@@ -1,3 +1,11 @@
+#Ignore my WIP dir
+./WIP_scripts/
+
+
+
+
+#Auto-generated gitignore below
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
