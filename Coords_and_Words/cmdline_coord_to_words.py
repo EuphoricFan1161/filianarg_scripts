@@ -50,9 +50,9 @@ def generate_binary_from_base10(coord):
     #implement inclusion of leading minuses here
     if args.keep_negative and (coord < 0):
         if args.flip_convention:
-            ret_bin = "0" + ret_bin
-        else:
             ret_bin = "1" + ret_bin
+        else:
+            ret_bin = "0" + ret_bin
     return ret_bin
 
 def partition(binary):
