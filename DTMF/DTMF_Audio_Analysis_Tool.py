@@ -1,7 +1,7 @@
 #Writen by TH3EEuphoricFan1161
 import argparse, textwrap
-import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
+import matplotlib.pyplot as plt  # type: ignore
+from matplotlib.lines import Line2D  # type: ignore
 import numpy as np
 from scipy import signal
 from scipy.io import wavfile
@@ -65,7 +65,7 @@ def set_style():
     plt.style.use('dark_background')
 
 def load_wav(wav_file, cuts=[]):
-    sample_rate, data = wavfile.read(f"Audio_Files\\{wav_file}")
+    sample_rate, data = wavfile.read(f"{wav_file}")
     n_channels = data[0].size
     if n_channels == 1:
         data_ch1 = data
@@ -119,7 +119,6 @@ def write_zoom_FFT_analyses_to_file(file, LRD, f_type, freqs, f_width, win_len, 
     n_incr = math.floor((n_samples - win_len)/incr) + 1
     metadata = [pkg_wave_data[0], win_len, incr, n_incr, LRD, f_type]
     f_metadata = []
-    os.chdir("D:\\filianarg_scripts\\Blackfile-Index_Audio\\DTMF\\Plots\\__data__")
     with open(f"zoomFFT {file[:-4]} channel={LRD} f_type={f_type} f_width={f_width} winlen={win_len} incr={incr}.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(metadata)
@@ -129,7 +128,6 @@ def write_zoom_FFT_analyses_to_file(file, LRD, f_type, freqs, f_width, win_len, 
             writer.writerow(AUC_f)
             writer.writerow(AUC_2f)
         writer.writerow(f_metadata)
-    os.chdir("..\\..")
 
 def get_label_info(f_type, plt_shft=False):
     if f_type == "nominal":
@@ -189,6 +187,9 @@ def plot_array_with_f_type(i, j, axs, linspace, csv_data, plt_type, color_names,
 #================================================#
 #                  Fit Functions                 #
 #================================================#
+def gauss_2(x, a_1, x0_1, s_1, a_2, x0_2, s_2):
+    return a_1*np.exp(-(x-x0_1)**2/(2*s_1**2)) + a_2*np.exp(-(x-x0_2)**2/(2*s_2**2))
+
 def gauss_8(x, a_1, x0_1, s_1, a_2, x0_2, s_2, a_3, x0_3, s_3, a_4, x0_4, s_4, a_5, x0_5, s_5, a_6, x0_6, s_6, a_7, x0_7, s_7, a_8, x0_8, s_8):
     return a_1*np.exp(-(x-x0_1)**2/(2*s_1**2)) + a_2*np.exp(-(x-x0_2)**2/(2*s_2**2)) + a_3*np.exp(-(x-x0_3)**2/(2*s_3**2)) + a_4*np.exp(-(x-x0_4)**2/(2*s_4**2))+ a_5*np.exp(-(x-x0_5)**2/(2*s_5**2)) + a_6*np.exp(-(x-x0_6)**2/(2*s_6**2)) + a_7*np.exp(-(x-x0_7)**2/(2*s_7**2)) + a_8*np.exp(-(x-x0_8)**2/(2*s_8**2))
 
@@ -209,7 +210,6 @@ def plot_waveform(wave1, wave1_linspace, title, show=True, save_path=""):
     if save_path == "":
         print("Not saving plot")
     else:
-        save_path = f"Plots\\{save_path}"
         plt.savefig(f"{save_path}.png")
     if show:
         plt.show()
@@ -359,7 +359,6 @@ def fit_FFT(wave, sample_rate, title, full_range=False, show=True, save_path="")
 
     plt.legend()
     if save_path != "":
-        save_path = f"Plots\\{save_path}"
         plt.savefig(f"{save_path}.png")
     if show:
         plt.show()
@@ -409,7 +408,6 @@ def plot_cepstrum(wave, title, show=True, modify=True, do_imag=False):
             plt.show()
 
 def plot_zoom_FFT_analyses_from_file(csv_file, plt_type="f", time=False, plt_shft=True, max_str=0, x_win=[], save=False, save_path=""):
-    os.chdir("D:\\filianarg_scripts\\Blackfile-Index_Audio\\DTMF\\Plots\\__data__")
     with open(f"{csv_file}", mode='r', newline='') as file:
         reader = csv.reader(file)
         csv_data = list(reader)
@@ -442,9 +440,8 @@ def plot_zoom_FFT_analyses_from_file(csv_file, plt_type="f", time=False, plt_shf
                 file_name = file_name + f" y_max={max_str}"
             if len(x_win) == 2:
                 file_name = file_name + f" {x_win[0]}_x_win_{x_win[1]}"
-            plt.savefig(f"D:\\filianarg_scripts\\Blackfile-Index_Audio\\DTMF\\Plots\\{save_path}\\zoomFFT\\{file_name}.png")
+            plt.savefig(f"{save_path}.png")
         plt.show()
-    os.chdir("..\\..")
 
 
 #================================================#
